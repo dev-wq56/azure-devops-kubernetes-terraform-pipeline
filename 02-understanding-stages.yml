@@ -11,30 +11,51 @@ stages:
     steps:
     - bash: echo Build FirstJob
     - bash: echo $(projectlevelvariable)
-  - job: SecondJob
-    steps:
-    - bash: echo Build SecondJob
-- stage: DevDeploy
-  variables:
-   evironment: Dev
-  dependsOn: Build
-  jobs:
-  - job: DevJob
-    steps:
-    - bash: echo $(environment)Job
-- stage: QaDeploy
-  variables:
-   environment: QA
-  dependsOn: Build
-  jobs:
-  - job: QaJob
-    steps:
-    - bash: echo $(environment)Job
-- stage: ProdDeploy
-  dependsOn:
-  - DevDeploy
-  - QaDeploy
-  jobs:
-  - job: ProdJob
-    steps:
-    - bash: echo ProdJob
+    - bash: echo $(Build.BuildNumber)
+    - bash: echo $(Build.BuildId)
+    - bash: echo $(Build.SourceBranchName)
+    - bash: echo $(Build.SourceDirectory)
+    - bash: echo $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectoey)
+    - bash: echo $(Build.ArtifactStagingDirectory)
+    - bash: java -version
+    - bash: node --version
+    - bash: python --version
+    - bash: mvn -version
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: |
+          **/*.yaml
+          **/*.tf
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+    
+  # - job: SecondJob
+  #   steps:
+  #   - bash: echo Build SecondJob
+# - stage: DevDeploy
+#   variables:
+#    evironment: Dev
+#   dependsOn: Build
+#   jobs:
+#   - job: DevJob
+#     steps:
+#     - bash: echo $(environment)Job
+# - stage: QaDeploy
+#   variables:
+#    environment: QA
+#   dependsOn: Build
+#   jobs:
+#   - job: QaJob
+#     steps:
+#     - bash: echo $(environment)Job
+# - stage: ProdDeploy
+#   dependsOn:
+#   - DevDeploy
+#   - QaDeploy
+#   jobs:
+#   - job: ProdJob
+#     steps:
+#     - bash: echo ProdJob
