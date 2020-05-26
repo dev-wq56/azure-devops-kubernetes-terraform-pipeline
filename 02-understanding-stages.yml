@@ -18,7 +18,7 @@ stages:
   jobs:
   - job: DevJob
     steps:
-    - bash: Echo DevJob
+    - bash: echo DevJob
 - stage: QaDeploy
   dependsOn: Build
   jobs:
