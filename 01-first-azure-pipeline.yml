@@ -25,7 +25,14 @@ jobs:
   - script: echo Hello-Job2 !
     displayName: 'Run a one1-line script'
 - job: job3
-  dependsOn: job2
+  dependsOn: job1
+  steps:
+  - script: echo Hello-Job3 !
+    displayName: 'Run a one2-line script'
+- job: job4
+  dependsOn:
+  - job2
+  - job3
   steps:
   - script: echo Hello-Job3 !
     displayName: 'Run a one2-line script'
