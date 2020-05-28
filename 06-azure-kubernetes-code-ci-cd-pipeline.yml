@@ -6,9 +6,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 24  
-  
-  #'$(Build.BuildId)'
+  tag: '$(Build.BuildId)'
 
 stages:
 
@@ -24,14 +22,16 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    # - task: Docker@2
-    #   displayName: Build an image
-    #   inputs:
-    #     containerRegistry: 'prdevops-docker-hub'
-    #     repository: 'prdevops/currency-exchange-devops'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    #     tags: '$(tag)'
+
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'prdevops-docker-hub'
+        repository: 'prdevops/currency-exchange-devops'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -43,6 +43,10 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'manifests'
         publishLocation: 'Container'
+
+#stage2
+  # Download the k8s files
+  # Deploy to kubernetes cluster with docker image
 
 - stage: Deploy
   displayName: Deploy image
@@ -66,6 +70,3 @@ stages:
         namespace: 'default'
         manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
         containers: 'prdevops/currency-exchange-devops:$(tag)'
-#stage2
-  # Download the k8s files
-  # Deploy to kubernetes cluster with docker image
