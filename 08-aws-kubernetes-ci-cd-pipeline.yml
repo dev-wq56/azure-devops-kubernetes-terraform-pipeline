@@ -49,7 +49,7 @@ stages:
   # Download the artifacts
   #  image:100(tag) is deployed on k8s cluster
   # apply kubectl apply -f deployment.yaml 
-	# this file is in #configuration->kubernetes>deployment.yaml ##
+  # this file is in #configuration->kubernetes>deployment.yaml ##
 
 - stage: Deploy
   displayName: Deploy image
