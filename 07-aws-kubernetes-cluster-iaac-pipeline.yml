@@ -8,6 +8,7 @@ steps:
 - script: echo Hello, aws-with terraform!
   displayName: 'Run a one-line script'
 
+# Terraform init and backend state configuration
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
@@ -16,3 +17,12 @@ steps:
     backendServiceAWS: 'aws-for-terraform'
     backendAWSBucketName: 'aws-s3-terraform-state-prdevops-xyz'
     backendAWSKey: 'k8s-dev.tfstate'
+
+  #Terraform apply
+
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'aws'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
+    environmentServiceNameAWS: 'aws-for-terraform'
