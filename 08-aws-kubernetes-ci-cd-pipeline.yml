@@ -12,7 +12,7 @@ stages:
 
 # Build
   #Build docker image
-  # Push the docker image : 100 (tag)  -> this is an image
+  # Push the docker image : 100 (tag)  -> this is an image with tag
   # copy files(deployment.yaml) to staging directory
   # publish artifacts (deployment.yaml)
 
