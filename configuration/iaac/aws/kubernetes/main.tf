@@ -4,7 +4,7 @@
 # terraform-backend-state-in28minutes-123
 # AKIA3NFAS2VFVEODXQMU
 
-
+  
 terraform {
   backend "s3" {
     bucket = "mybucket" # Will be overridden from build
